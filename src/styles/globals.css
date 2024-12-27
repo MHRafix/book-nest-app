@@ -1,0 +1,113 @@
+/* google font import here */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap");
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Nunito Sans", sans-serif !important;
+  /* font-family: "Poppins", sans-serif !important; */
+  background-color: #ebf0f4;
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: cyan !important;
+}
+
+#gotop_client_btn {
+  background: cyan;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 99999999px;
+  font-size: 25px;
+  z-index: 9999999999;
+}
+
+.scroll-to-top {
+  background-color: white;
+  right: 40px;
+  bottom: 40px;
+  position: fixed;
+  right: 10px !important;
+  z-index: 2;
+  cursor: pointer;
+  border-radius: 7px;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 9px 25px 0 rgba(132, 128, 177, 0.28);
+  border: none;
+}
+
+#gotop_client_btn:hover {
+  background: white;
+  transition: 0.3s;
+  color: cyan;
+}
+
+select option:hover {
+  background-color: #3fd0d4 !important;
+}
+
+input#destination::placeholder {
+  color: #a4a4a4;
+}
+
+.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+  margin-bottom: 35px;
+}
+
+span.swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+  background: #3fcfd464;
+  opacity: 1.5;
+}
+
+.mantine-Carousel-indicator {
+  background-color: #3fd0d4 !important;
+  width: 15px !important;
+  height: 15px !important;
+}
+
+@media (min-width: 768px) {
+  .section-with-carousel .swiper-slide img {
+    height: 370px;
+  }
+}
+@media (min-width: 1200px) {
+  .section-with-carousel .swiper-slide img {
+    height: 420px;
+  }
+
+  .section-with-carousel .carousel-controls {
+    padding: 0 50px;
+  }
+}
+
+#suggested_layer::-webkit-scrollbar {
+  width: 0.2rem !important;
+}
+
+#suggested_layer::-webkit-scrollbar:horizontal {
+  width: 0.2rem !important;
+  height: 0.2rem !important;
+}
+
+#suggested_layer::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#suggested_layer::-webkit-scrollbar-thumb {
+  background: #97e7d1 !important;
+  border-radius: 5rem !important;
+}
+
+html::-webkit-scrollbar {
+  width: 0.5rem !important;
+}
+
+/* .mantine-Calendar-day {
+	background-color: #3fd0d4 !important;
+} */
