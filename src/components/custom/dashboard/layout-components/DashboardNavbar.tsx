@@ -8,7 +8,7 @@ import {
 	Title,
 } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { IconBook, IconX } from '@tabler/icons-react';
+import { IconBook, IconNotification, IconX } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -112,5 +112,10 @@ export const menus = [
 		label: 'All Books',
 		icon: <IconBook size={20} />,
 		href: '/',
+	},
+	{
+		label: 'Notifications',
+		icon: <IconNotification size={20} />,
+		href: '/my-books/notification',
 	},
 ];
