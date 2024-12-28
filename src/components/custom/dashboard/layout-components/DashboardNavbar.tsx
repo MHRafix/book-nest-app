@@ -5,6 +5,7 @@ import {
 	ScrollArea,
 	Space,
 	Text,
+	Title,
 } from '@mantine/core';
 import { IconBook, IconX } from '@tabler/icons-react';
 import Image from 'next/image';
@@ -28,14 +29,17 @@ const DashboardNavbar: React.FC<Props> = ({ opened, onOpened }) => {
 		>
 			<Navbar.Section>
 				<Space h={10} />
-				<div className='flex items-center justify-start pl-3'>
+				<div className='text-center mt-5'>
 					<Image
 						src={'/assets/Logo/logo.png'}
 						alt='Logo'
-						width={250}
+						width={100}
 						height={100}
-						className='!w-[250px] !object-cover'
+						className='!w-[100px] mx-auto !object-cover'
 					/>
+					<Title order={2} fw={800} mt={15} color='violet'>
+						BookNest
+					</Title>
 				</div>
 			</Navbar.Section>
 			<Space h={30} />

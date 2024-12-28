@@ -21,7 +21,7 @@ const PageTitleArea: React.FC<IPageTitleProps> = ({
 	});
 
 	return (
-		<Box className='sm:flex justify-between items-center grid gap-y-3'>
+		<Box className='lg:flex justify-between items-center grid gap-y-3'>
 			<div>
 				<Title
 					order={3}
