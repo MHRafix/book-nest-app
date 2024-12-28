@@ -23,6 +23,8 @@ import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 import PageTitleArea from '../components/common/PageTitleArea';
 
 const HomePage: NextPage = () => {
@@ -31,9 +33,7 @@ const HomePage: NextPage = () => {
 
 	// drawer controller state
 	const [opened, drawerHandler] = useDisclosure();
-	const [publicationDate, setPublicationDate] = useState<string | null>(
-		new Date().toISOString().split('T')[0]
-	);
+	const [publicationDate, setPublicationDate] = useState<string | null>(null);
 	const [priceRange, setPriceRange] = useState<number[]>();
 	const [genre, setGenre] = useState<string>('');
 	const [sortType, setSortType] = useState<'asc' | 'desc'>('asc');
@@ -44,30 +44,39 @@ const HomePage: NextPage = () => {
 	// get all book list
 	const { isLoading, isError, data, error, refetch, isFetching } = useQuery({
 		queryKey: ['all-book-list'],
-		queryFn: () =>
-			bookApiRepository.getAllBook(
-				publicationDate!,
-				priceRange!,
-				genre,
-				sortType,
-				sortBy,
-				limit,
-				page
-			),
-
+		queryFn: () => bookApiRepository.getAllBook(handleFilter()),
 		enabled: false,
 	});
 
 	// fetch all book
 	useEffect(() => {
 		refetch();
-	}, [router, limit, page]);
+	}, [limit, page]);
 
 	// handle filtering
 	const handleFilter = () => {
-		router.push(
-			`/?genre=${genre}&priceRange=${priceRange}&sortType=${sortType}&sortBy=${sortBy}&publicationDate=${publicationDate}&limit=${limit}&page=${page}`
-		);
+		let url = `/book/all-books?limit=${limit}&page=${page}&order=${sortType}`;
+
+		if (publicationDate) {
+			url += `&publicationDate=${publicationDate}`;
+		}
+		if (priceRange?.length) {
+			url += `&minPrice=${priceRange[0]}`;
+			url += `&maxPrice=${priceRange[1]}`;
+		}
+		if (sortBy) {
+			url += `&sortBy=${sortBy}`;
+		}
+		if (genre) {
+			url += `&genre=${genre.charAt(0).toUpperCase() + genre.slice(1)}`;
+		}
+
+		return url;
+	};
+
+	const handlePageClick = (event: any) => {
+		setPage(event?.selected + 1);
+		console.log(event);
 	};
 
 	return (
@@ -95,7 +104,6 @@ const HomePage: NextPage = () => {
 							placeholder='Filter by Genre'
 						/>
 						<DateInput
-							value={new Date(publicationDate!)}
 							onChange={(e: Date) =>
 								setPublicationDate(new Date(e).toISOString().split('T')[0])
 							}
@@ -107,9 +115,8 @@ const HomePage: NextPage = () => {
 								{ label: 'Desc', value: 'desc' },
 							]}
 							placeholder='Sort type'
-							clearable
 							onChange={(e) => setSortType(e as any)}
-							value={sortType}
+							defaultValue={sortType}
 						/>
 						<Select
 							data={[
@@ -119,14 +126,16 @@ const HomePage: NextPage = () => {
 								{ label: 'UpdatedAt', value: 'updatedAt' },
 							]}
 							placeholder='Sort by'
+							clearable
 							onChange={(e) => setSortBy(e!)}
 							value={sortBy}
 						/>
 						<Button
-							onClick={handleFilter}
+							onClick={() => refetch()}
 							leftIcon={<IconFilter />}
 							variant='light'
 							color='teal'
+							loading={isFetching}
 						>
 							Filter
 						</Button>
@@ -146,7 +155,7 @@ const HomePage: NextPage = () => {
 
 			{/* book list */}
 			<div>
-				{isLoading ? (
+				{isLoading || isFetching ? (
 					<div className='grid lg:grid-cols-3  md:grid-cols-2 gap-5'>
 						{new Array(15).fill(15).map((_, idx: number) => (
 							<Skeleton key={idx} radius={10} h={200} />
@@ -167,27 +176,6 @@ const HomePage: NextPage = () => {
 								</Paper>
 							))}
 						</div>
-						<div className='flex gap-5 justify-center my-5'>
-							<Select
-								data={[
-									'5',
-									'10',
-									'20',
-									'30',
-									'40',
-									'50',
-									'60',
-									'70',
-									'80',
-									'90',
-									'100',
-								]}
-								label='Limit'
-								onChange={(e) => setLimit(parseInt(e as string))}
-								value={limit.toString()}
-							/>
-						</div>
-
 						<div className='md:w-8/12 mx-auto'>
 							{' '}
 							<EmptyPanel
@@ -195,6 +183,35 @@ const HomePage: NextPage = () => {
 								isShow={!Boolean(data?.books?.length)}
 							/>
 						</div>
+						{data?.books?.length ? (
+							<div className='flex gap-5 justify-center items-center my-5'>
+								<Select
+									data={[
+										'5',
+										'10',
+										'20',
+										'30',
+										'40',
+										'50',
+										'60',
+										'70',
+										'80',
+										'90',
+										'100',
+									]}
+									onChange={(e) => {
+										setLimit(parseInt(e as string));
+										setPage(1);
+									}}
+									value={limit.toString()}
+								/>
+								<ResponsivePagination
+									current={page}
+									total={Math.ceil(data?.totalCount! / data?.limit!)}
+									onPageChange={setPage}
+								/>
+							</div>
+						) : null}
 					</div>
 				)}
 			</div>

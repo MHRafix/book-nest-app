@@ -19,18 +19,8 @@ class BookApiRepository {
 	 * get all book api
 	 * @returns
 	 */
-	async getAllBook(
-		publicationDate?: string,
-		priceRange?: number[],
-		genre?: string,
-		sortType?: string,
-		sortBy?: string,
-		limit?: number,
-		page?: number
-	) {
-		const res = await this.httpReq.get<IBookWithPagination>(
-			`/book/all-books?publicationDate=${publicationDate}&minPrice=${priceRange?.[0]}&maxPrice=${priceRange?.[1]}&genre=${genre}&order=${sortType}&sortBy=${sortBy}&limit=${limit}&page=${page}`
-		);
+	async getAllBook(url: string) {
+		const res = await this.httpReq.get<IBookWithPagination>(url);
 		return res?.data;
 	}
 }
