@@ -100,6 +100,6 @@ export const menus = [
 	{
 		label: 'Book Management',
 		icon: <IconBook size={20} />,
-		href: '/manage-books',
+		href: '/',
 	},
 ];

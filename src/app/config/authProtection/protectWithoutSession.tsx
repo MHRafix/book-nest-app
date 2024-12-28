@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { ComponentType, FC, useEffect } from 'react';
 import { useGetSession } from '../logic/getSession';
 
-const protectWithoutSession = <P extends object>(
+const ProtectWithoutSession = <P extends object>(
 	Component: ComponentType<P>
 ): FC<P> => {
 	const WithAuthenticationRequired: FC<P> = (props) => {
@@ -31,4 +31,4 @@ const protectWithoutSession = <P extends object>(
 	return WithAuthenticationRequired;
 };
 
-export default protectWithoutSession;
+export default ProtectWithoutSession;

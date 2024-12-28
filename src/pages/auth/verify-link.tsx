@@ -1,4 +1,5 @@
 import authenticationApiRepository from '@/app/api/repositories/authentication.repo';
+import ProtectWithoutSession from '@/app/config/authProtection/protectWithoutSession';
 
 import { Flex, Loader } from '@mantine/core/';
 import { showNotification } from '@mantine/notifications';
@@ -15,7 +16,7 @@ const VerifyMagicLinkAndAuthenticationPage: NextPage = () => {
 	// execute after success
 	const onSuccess = (res: { token: string }) => {
 		Cookies.set('user', JSON.stringify(res), {
-			expires: 3 / (24 * 60),
+			expires: 100 / (24 * 60),
 			sameSite: 'strict',
 		});
 		if (router?.query?.callback) {
@@ -65,7 +66,7 @@ const VerifyMagicLinkAndAuthenticationPage: NextPage = () => {
 	);
 };
 
-export default VerifyMagicLinkAndAuthenticationPage;
+export default ProtectWithoutSession(VerifyMagicLinkAndAuthenticationPage);
 
 export interface IAuthPayload {
 	token: string;

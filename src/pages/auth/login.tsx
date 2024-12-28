@@ -1,4 +1,4 @@
-import protectWithoutSession from '@/app/config/authProtection/potectWithoutSession';
+import protectWithoutSession from '@/app/config/authProtection/protectWithoutSession';
 
 import authenticationApiRepository from '@/app/api/repositories/authentication.repo';
 import { ErrorMessage } from '@hookform/error-message';
