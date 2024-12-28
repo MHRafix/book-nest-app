@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core';
+import { Paper, Text } from '@mantine/core';
 import Image from 'next/image';
 import React from 'react';
 
@@ -11,7 +11,7 @@ const EmptyPanel: React.FC<{
 	}
 
 	return (
-		<div className='text-center bg-[#fff] shadow-md rounded-lg p-4'>
+		<Paper className='text-center shadow-md rounded-lg p-4'>
 			<Image
 				src={'/assets/emptyPanel/book.png'}
 				alt='image'
@@ -26,7 +26,7 @@ const EmptyPanel: React.FC<{
 			<Text my={5} ff={'Nunito sans, sans-serif'}>
 				There is no data available.
 			</Text>
-		</div>
+		</Paper>
 	);
 };
 

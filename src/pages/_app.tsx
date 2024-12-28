@@ -1,6 +1,7 @@
 import { bookNestApplicationEmotionCache } from '@/utils/emotionCache';
 
 import { MantineProvider } from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -11,13 +12,18 @@ import '../styles/tailwindcss.css';
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+	// theme mode
+	const [mode = 'light', setMode] = useLocalStorage<any>({
+		key: 'mode',
+	});
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<MantineProvider
 				emotionCache={bookNestApplicationEmotionCache}
 				theme={{
 					fontFamily: 'Nunito sans, sans-serif',
-					colorScheme: 'light',
+					colorScheme: mode || 'light',
 					primaryColor: 'violet',
 					breakpoints: {
 						xs: '500',

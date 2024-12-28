@@ -27,13 +27,16 @@ const PageTitleArea: React.FC<IPageTitleProps> = ({
 					order={3}
 					fw={500}
 					my={5}
-					color={mode === 'dark' ? 'white' : 'black'}
+					className={`${mode === 'dark' ? '!text-[#FFFFFF]' : '!text-slate-800'}`}
 				>
 					{title}
 				</Title>
 				{tagline && (
 					<Indicator color='violet' position='middle-start' size={8}>
-						<Text size='md' className='text-dimmed ml-2'>
+						<Text
+							className={`${mode === 'dark' ? '!text-gray-400' : '!text-slate-800'} ml-2`}
+							size='md'
+						>
 							{tagline}
 						</Text>
 					</Indicator>

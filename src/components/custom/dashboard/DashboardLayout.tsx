@@ -1,4 +1,5 @@
-import { AppShell } from '@mantine/core';
+import { AppShell, Box } from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 import Head from 'next/head';
 import { PropsWithChildren, useState } from 'react';
 import DashboardHeader from './layout-components/DashboardHeader';
@@ -14,11 +15,16 @@ const DashboardLayout: React.FC<PropsWithChildren<Props>> = ({
 	title,
 	Actions,
 }) => {
+	// theme mode
+	const [mode = 'light', setMode] = useLocalStorage<any>({
+		key: 'mode',
+	});
+
 	const [opened, setOpened] = useState(false);
 	return (
 		<div>
 			<Head>
-				<title>Asia admin - {title ? title : 'Dashboard'}</title>
+				<title>BookNest - {title ? title : 'Dashboard'}</title>
 				<meta
 					name='viewport'
 					content='minimum-scale=1, initial-scale=1, width=device-width'
@@ -26,12 +32,17 @@ const DashboardLayout: React.FC<PropsWithChildren<Props>> = ({
 			</Head>
 			<AppShell
 				header={<DashboardHeader opened={opened} setOpened={setOpened} />}
-				// navbarOffsetBreakpoint='sm'
-				// asideOffsetBreakpoint='sm'
 				navbar={<DashboardNavbar opened={opened} onOpened={setOpened} />}
-			>
-				<main className='sm:pr-2 px-0'>{children}</main>
-			</AppShell>
+				className={`${mode === 'light' ? '!bg-[#FFFFFF]' : '!bg-slate-800'}`}
+				footer={
+					<Box
+						className={`flex justify-center items-center ${mode === 'light' ? '!bg-[#FFFFFF]' : '!bg-slate-800'} ${mode === 'light' ? '!text-[#FFFFFF]' : '!text-slate-800'}`}
+					>
+						All right reserved by BookNest©2024
+					</Box>
+				}
+				children={<main className='mt-[100px]'>{children}</main>}
+			></AppShell>
 		</div>
 	);
 };

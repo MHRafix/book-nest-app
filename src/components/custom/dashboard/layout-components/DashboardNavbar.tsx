@@ -7,6 +7,7 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 import { IconBook, IconX } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,12 +21,18 @@ interface Props {
 const DashboardNavbar: React.FC<Props> = ({ opened, onOpened }) => {
 	const { asPath } = useRouter();
 
+	// theme mode
+	const [mode = 'light', setMode] = useLocalStorage<any>({
+		key: 'mode',
+	});
+
 	return (
 		<Navbar
 			hiddenBreakpoint='sm'
 			hidden={!opened}
 			width={{ sm: 200, lg: 250 }}
 			style={{ zIndex: 100000000 }}
+			className={`${mode === 'light' ? '!bg-[#FFFFFF]' : '!bg-slate-800'}`}
 		>
 			<Navbar.Section>
 				<Space h={10} />
@@ -77,8 +84,9 @@ const DashboardNavbar: React.FC<Props> = ({ opened, onOpened }) => {
 							item?.href === '/rating_&&_reviews' ||
 							item?.href === '/reception_management/task_review'
 						}
-						active={asPath.includes(item.href)}
+						active={asPath === item.href}
 						defaultOpened={asPath.includes(item.href)}
+						color={mode === 'light' ? 'dark' : 'blue'}
 						styles={() => ({
 							// theme.colors.brand[9]
 							root: {
@@ -90,7 +98,6 @@ const DashboardNavbar: React.FC<Props> = ({ opened, onOpened }) => {
 					/>
 				))}
 			</Navbar.Section>
-			<Space h={20} />
 			{/* <Navbar.Section>
 				<UserButton />
 			</Navbar.Section> */}
@@ -102,7 +109,7 @@ export default DashboardNavbar;
 
 export const menus = [
 	{
-		label: 'Book Management',
+		label: 'All Books',
 		icon: <IconBook size={20} />,
 		href: '/',
 	},

@@ -3,7 +3,7 @@ import protectWithoutSession from '@/app/config/authProtection/protectWithoutSes
 import authenticationApiRepository from '@/app/api/repositories/authentication.repo';
 import { ErrorMessage } from '@hookform/error-message';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Flex, Input, Title } from '@mantine/core/';
+import { Button, Flex, Input, Paper, Title } from '@mantine/core/';
 import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconMail, IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
@@ -24,19 +24,6 @@ const LoginPage: NextPage = () => {
 		defaultValues: { email: '' },
 		resolver: yupResolver(Login_Form_Validation_Schema),
 	});
-
-	// execute after success
-	// const onSuccess = (res: { token: string; _id: string }) => {
-	// 	Cookies.set('user', JSON.stringify(res), {
-	// 		expires: 5,
-	// 		sameSite: 'strict',
-	// 	});
-	// 	if (router?.query?.callback) {
-	// 		router?.push(router?.query?.callback as string);
-	// 	} else {
-	// 		router?.push('/');
-	// 	}
-	// };
 
 	// login mutation
 	const { mutate, isPending } = useMutation({
@@ -68,7 +55,7 @@ const LoginPage: NextPage = () => {
 
 	return (
 		<Flex justify='center' align='center' h='100vh'>
-			<Box className='xs:w-11/12 lg:w-5/12 bg-white  p-5 drop-shadow-xl rounded-md'>
+			<Paper className='xs:w-11/12 lg:w-5/12 p-5 drop-shadow-xl rounded-md'>
 				<Title order={2} mb={10} ff={'Nunito sans, sans-serif'}>
 					Login Now
 				</Title>
@@ -102,7 +89,7 @@ const LoginPage: NextPage = () => {
 						Login now
 					</Button>
 				</form>
-			</Box>
+			</Paper>
 		</Flex>
 	);
 };

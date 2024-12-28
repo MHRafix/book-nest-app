@@ -13,12 +13,12 @@ const ProtectWithSession = <P extends object>(
 			if (user == null && !isLoading) {
 				router.push(`/auth/login?callback=${router?.asPath}`);
 			}
-		}, [user, isLoading, router]);
+		}, [user, isLoading]);
 
 		if (isLoading || user == null) {
 			return (
 				<div className='flex justify-center w-full h-screen items-center'>
-					<Loader color='violet' size='sm' />
+					<Loader color='violet' size='lg' />
 				</div>
 			);
 		}

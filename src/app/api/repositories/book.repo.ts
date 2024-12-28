@@ -1,7 +1,7 @@
 import { IBookFormStateType } from '@/components/custom/BookManagement/AddBookForm';
 import { AxiosInstance } from 'axios';
 import httpReq from '../http';
-import { IBookWithPagination } from '../model/book.model';
+import { IBook, IBookWithPagination } from '../model/book.model';
 
 class BookApiRepository {
 	constructor(private httpReq: AxiosInstance) {}
@@ -21,6 +21,14 @@ class BookApiRepository {
 	 */
 	async getAllBook(url: string) {
 		const res = await this.httpReq.get<IBookWithPagination>(url);
+		return res?.data;
+	}
+	/**
+	 * get books by user id
+	 * @returns
+	 */
+	async getMyBook(id: string) {
+		const res = await this.httpReq.get<IBook[]>(`/book/my-books/${id}`);
 		return res?.data;
 	}
 }

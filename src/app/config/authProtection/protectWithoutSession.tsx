@@ -20,7 +20,7 @@ const ProtectWithoutSession = <P extends object>(
 		if (isLoading || user) {
 			return (
 				<div className='flex justify-center w-full h-screen items-center'>
-					<Loader color='violet' size='sm' />
+					<Loader color='violet' size='lg' />
 				</div>
 			);
 		}

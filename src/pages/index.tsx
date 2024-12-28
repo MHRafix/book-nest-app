@@ -17,8 +17,8 @@ import {
 	Title,
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { useDisclosure } from '@mantine/hooks';
-import { IconFilter, IconPlus } from '@tabler/icons-react';
+import { useDisclosure, useLocalStorage } from '@mantine/hooks';
+import { IconFilter } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -42,7 +42,7 @@ const HomePage: NextPage = () => {
 	const [page, setPage] = useState<number>(1);
 
 	// get all book list
-	const { isLoading, isError, data, error, refetch, isFetching } = useQuery({
+	const { isLoading, data, refetch, isFetching } = useQuery({
 		queryKey: ['all-book-list'],
 		queryFn: () => bookApiRepository.getAllBook(handleFilter()),
 		enabled: false,
@@ -74,10 +74,10 @@ const HomePage: NextPage = () => {
 		return url;
 	};
 
-	const handlePageClick = (event: any) => {
-		setPage(event?.selected + 1);
-		console.log(event);
-	};
+	// theme mode
+	const [mode = 'light'] = useLocalStorage<any>({
+		key: 'mode',
+	});
 
 	return (
 		<DashboardLayout title='Book Management'>
@@ -87,7 +87,11 @@ const HomePage: NextPage = () => {
 				actionComponent={
 					<div className='lg:flex grid gap-3 items-center'>
 						{' '}
-						Price range:{' '}
+						<Text
+							className={`${mode === 'dark' ? '!text-gray-400' : '!text-slate-800'}`}
+						>
+							Price range:{' '}
+						</Text>
 						<RangeSlider
 							minRange={1}
 							bg={'teal'}
@@ -133,19 +137,11 @@ const HomePage: NextPage = () => {
 						<Button
 							onClick={() => refetch()}
 							leftIcon={<IconFilter />}
-							variant='light'
+							variant='filled'
 							color='teal'
 							loading={isFetching}
 						>
 							Filter
-						</Button>
-						<Button
-							onClick={drawerHandler.open}
-							leftIcon={<IconPlus />}
-							variant='filled'
-							color='violet'
-						>
-							Add new
 						</Button>
 					</div>
 				}
@@ -165,7 +161,7 @@ const HomePage: NextPage = () => {
 					<div>
 						<div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5'>
 							{data?.books?.map((book: IBook, idx: number) => (
-								<Paper key={idx} px={15} py={20}>
+								<Paper key={idx} px={15} py={20} withBorder>
 									<Title color='violet' order={3} fw={700}>
 										{book?.title}
 									</Title>{' '}
