@@ -28,7 +28,6 @@ const MyBooksPage: NextPage = () => {
 		queryFn: () => bookApiRepository.getMyBook(loggedUser?._id as string),
 		enabled: false,
 	});
-
 	// fetch all book
 	useEffect(() => {
 		refetch();

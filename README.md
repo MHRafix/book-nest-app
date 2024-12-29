@@ -7,6 +7,7 @@
 - TypeScript
 - React-Query
 - Pagination and Filtering
+- Real time notification
 
 ## Instructions to run the app
 

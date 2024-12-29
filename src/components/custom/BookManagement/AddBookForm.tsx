@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Input, NumberInput, Space } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -33,16 +33,16 @@ const AddBookForm: React.FC<IBookFormProps> = ({ onRefetch, onClose }) => {
 		mutationKey: ['Add_Book_Mutation'],
 		mutationFn: (payload: IBookFormStateType) =>
 			bookApiRepository.addBook(payload),
-		onSuccess() {
-			onRefetch();
-			onClose();
-			showNotification({
-				title: 'Book added to list successfully.',
-				color: 'teal',
-				icon: <IconCheck size={16} />,
-				message: '',
-			});
-		},
+		// onSuccess() {
+		// 	onRefetch();
+		// 	onClose();
+		// 	showNotification({
+		// 		title: 'Book added to list successfully.',
+		// 		color: 'teal',
+		// 		icon: <IconCheck size={16} />,
+		// 		message: '',
+		// 	});
+		// },
 		onError(error) {
 			showNotification({
 				title: 'Failed to add book.',
