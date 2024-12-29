@@ -1,3 +1,4 @@
+import { useGetSession } from '@/app/config/logic/getSession';
 import { signOut } from '@/app/config/logic/signOut';
 import { Avatar, Box, Burger, Group, Menu, Text } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const DashboardHeader: React.FC<Props> = ({ opened, setOpened }) => {
+	const { user } = useGetSession();
+
 	// theme mode
 	const [mode = 'light', setMode] = useLocalStorage<any>({
 		key: 'mode',
@@ -60,11 +63,12 @@ const DashboardHeader: React.FC<Props> = ({ opened, setOpened }) => {
 								size={'lg'}
 								radius={100}
 							>
-								M
+								{user?.email?.slice(0, 1).toUpperCase()}
 							</Avatar>
 						</Menu.Target>
 
 						<Menu.Dropdown w={200}>
+							<Menu.Label>{user?.email}</Menu.Label>
 							<Menu.Item color='violet' icon={<IconBooks />}>
 								<Link href={'/my-books'}>My Books</Link>
 							</Menu.Item>
