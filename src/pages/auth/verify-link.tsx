@@ -16,7 +16,7 @@ const VerifyMagicLinkAndAuthenticationPage: NextPage = () => {
 	// execute after success
 	const onSuccess = (res: { token: string }) => {
 		Cookies.set('user', JSON.stringify(res), {
-			expires: 100 / (24 * 60),
+			expires: 15 / (24 * 60),
 			sameSite: 'strict',
 		});
 		if (router?.query?.callback) {
