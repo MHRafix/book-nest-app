@@ -33,16 +33,10 @@ const AddBookForm: React.FC<IBookFormProps> = ({ onRefetch, onClose }) => {
 		mutationKey: ['Add_Book_Mutation'],
 		mutationFn: (payload: IBookFormStateType) =>
 			bookApiRepository.addBook(payload),
-		// onSuccess() {
-		// 	onRefetch();
-		// 	onClose();
-		// 	showNotification({
-		// 		title: 'Book added to list successfully.',
-		// 		color: 'teal',
-		// 		icon: <IconCheck size={16} />,
-		// 		message: '',
-		// 	});
-		// },
+		onSuccess() {
+			onRefetch();
+			onClose();
+		},
 		onError(error) {
 			showNotification({
 				title: 'Failed to add book.',
